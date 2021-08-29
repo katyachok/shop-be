@@ -6,12 +6,12 @@ import { middyfy } from '@libs/lambda';
 
 // import schema from './schema';
 
-const hello = async (event: any) => {
-  console.log("hello handler event", event);
+const getProductsList = async (event: any) => {
+  console.log("getProductsList handler event", event);
   return formatJSONResponse({
     message: `Hello, welcome to the exciting Serverless world!`,
     event,
   });
 }
 
-export const main = middyfy(hello);
+export const main = middyfy(getProductsList);
