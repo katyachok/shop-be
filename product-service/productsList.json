@@ -1,0 +1,58 @@
+[
+  {
+    "count": 150,
+    "description": "Dark, rich espresso lies in wait under a smoothed and stretched layer of thick milk foam. An alchemy of barista artistry and craft",
+    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80aa",
+    "price": 2.4,
+    "title": "Cappuccino"
+  },
+  {
+    "count": 50,
+    "description": "Lightly roasted coffee that's soft, mellow and flavorful. Easy-drinking on its own and delicious with milk, sugar or flavored with vanilla, caramel or hazelnut",
+    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a0",
+    "price": 4.25,
+    "title": "Blonde Roast"
+  },
+  {
+    "count": 150,
+    "description": "Espresso meets a dollop of whipped cream to enhance the rich and caramelly flavors of a straight-up shot",
+    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a2",
+    "price": 2.95,
+    "title": "Espresso Con Panna"
+  },
+  {
+    "count": 150,
+    "description": "Smooth ristretto shots of espresso get the perfect amount of steamed whole milk to create a not-too-strong, not-too-creamy, just-right flavor",
+    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a1",
+    "price": 3.75,
+    "title": "Flat White"
+  },
+  {
+    "count": 70,
+    "description": "Our signature espresso and steamed milk with the celebrated flavor combination of pumpkin, cinnamon, nutmeg and clove. Enjoy it topped with whipped cream and real pumpkin-pie spices",
+    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a3",
+    "price": 4.25,
+    "title": "Pumpkin Spice Latte"
+  },
+  {
+    "count": 8,
+    "description": "Layered flavors of apple and brown sugar meld like the filling of a gooey apple pie in harmony with espresso, steamed milk and a caramelized-spiced apple drizzle—a nostalgic autumn pick-me-up",
+    "id": "7567ec4b-b10c-48c5-9345-fc73348a80a1",
+    "price": 3.75,
+    "title": "Apple Crisp Macchiato"
+  },
+  {
+    "count": 2,
+    "description": "Our rich, full-bodied espresso combined with bittersweet mocha sauce and steamed milk, then topped with sweetened whipped cream. The classic coffee drink that always sweetly satisfies",
+    "id": "7567ec4b-b10c-48c5-9445-fc73c48a80a2",
+    "price": 3.45,
+    "title": "Caffè Mocha"
+  },
+  {
+    "count": 3,
+    "description": "Espresso shots topped with hot water create a light layer of crema culminating in this wonderfully rich cup with depth and nuance. Pro Tip: For an additional boost, ask your barista to try this with an extra shot",
+    "id": "7567ec4b-b10c-45c5-9345-fc73c48a80a1",
+    "price": 2.45,
+    "title": "Caffè Americano"
+  }
+]
