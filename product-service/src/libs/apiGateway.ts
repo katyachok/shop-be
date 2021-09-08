@@ -11,6 +11,7 @@ export const formatJSONResponse = (response: Record<string, unknown>) => {
       'Access-Control-Allow-Headers': "*",
       'Access-Control-Allow-Origin': "*",
       'Access-Control-Allow-Methods': "*",
+      'Content-Type': 'application/json'
     },
     isBase64Encoded: false,
     body: JSON.stringify(response)
