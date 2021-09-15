@@ -14,10 +14,10 @@ const getProductsList = async (event: any) => {
     switch (event.httpMethod) {
       case 'GET': {
         console.log('getProducts', event);
-        const ddlResult = await client.query(`SELECT * FROM products RIGHT JOIN stocks ON stocks.product_id = products.id`);
+        const ddlResult = await client.query(`SELECT id, title, description, price, count FROM products RIGHT JOIN stocks ON stocks.product_id = products.id`);
         const { rows } = ddlResult;
         return formatJSONResponse({
-          rows,
+          ...rows,
         });
       }
       case 'POST': {
@@ -31,7 +31,7 @@ const getProductsList = async (event: any) => {
         await client.query(`insert into products (id, title, description, price) values ('${id}', '${title}', '${description}', '${price}')`);
         await client.query(`insert into stocks (product_id, count) values ('${id}', '${count}')`);
 
-        return formatJSONResponse({});
+        return formatJSONResponse({title, description, price, count, id});
       }
     }
   } catch (err) {

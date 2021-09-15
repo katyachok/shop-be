@@ -14,7 +14,7 @@ export default {
     {
       http: {
         method: 'post',
-        path: 'products/create',
+        path: 'products',
         cors: true,
       }
     }
