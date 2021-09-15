@@ -1,34 +1,27 @@
 import 'source-map-support/register';
 
-// import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
 import { formatJSONResponse } from '@libs/apiGateway';
+import { errorHandler } from '@libs/errorHandler';
 import { middyfy } from '@libs/lambda';
-import * as productsList from '../../../productsList.json';
-
-// import schema from './schema';
-
-const transformStrings = str => {
-  if (!str) return;
-  return str.toLowerCase().replace(/\s/g, '');
-}
+import { Client } from 'pg';
+import { dbOptions } from '@functions/utils.js';
 
 const getProductsById = async (event: any) => {
+  const client = new Client(dbOptions);
+  await client.connect();
+  
   try {
-    let productById;
-    if(!event.pathParameters?.productId) return formatJSONResponse({
-      message: 'Something went wrong',
-    });
-    for (let key in productsList) {
-      if (transformStrings(productsList[key]?.title) === transformStrings(event.pathParameters?.productId)) {
-        productById = { ...productsList[key] };
-      }
-    };
-    console.log("getProductsById handler event", event.pathParameters?.productId, productById );
+    console.log('productId request', event.pathParameters?.productId);
+    const ddlResult = await client.query(`SELECT * FROM products, stocks WHERE products.id = '${event.pathParameters?.productId}' and stocks.product_id = '${event.pathParameters?.productId}'`);
+    const res = ddlResult.rows[0];
     return formatJSONResponse({
-      ...productById
+      res,
     });
   } catch (err) {
-    console.error(err)
+    console.error(err);
+        return errorHandler(500);
+  } finally {
+    client.end()
   }
 }
 

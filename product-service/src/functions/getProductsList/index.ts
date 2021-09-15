@@ -10,6 +10,13 @@ export default {
         path: 'products',
         cors: true,
       }
+    },
+    {
+      http: {
+        method: 'post',
+        path: 'products',
+        cors: true,
+      }
     }
   ]
 }
