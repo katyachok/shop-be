@@ -5,7 +5,7 @@ export default {
   events: [
     {
       s3: {
-        bucket: `${process.env.UPLOADBUCKET}`,
+        bucket: 'import-service-dev-serverlessdeploymentbucket-hy2q7mknnkul',
         event: 's3:ObjectCreated:*',
         rules: [{
           prefix: 'uploaded/'

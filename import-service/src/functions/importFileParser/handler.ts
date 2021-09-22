@@ -12,9 +12,11 @@ const importFileParser = async (event) => {
 
   console.log('importFileParser event.Records', event.Records);
   event.Records.forEach(record => {
+    const bucket = record.s3.bucket.name;
+    const filePath = record.s3.object.key;
     const s3Stream = s3.getObject({
-      Bucket: process.env.UPLOADBUCKET,
-      Key: record.s3.object.key
+      Bucket: bucket,
+      Key: filePath
     }).createReadStream();
     
     s3Stream.pipe(csv())
@@ -22,7 +24,18 @@ const importFileParser = async (event) => {
         console.log(data);
       })
       .on('end', async () => {
-        console.log(`end from ${record.s3.object.key}`);
+        await s3.copyObject({
+          Bucket: bucket,
+          CopySource: `${bucket}/${filePath}`,
+          Key: filePath.replace('uploaded', 'parsed'),
+        }).promise();
+        console.log(`copied ${filePath}`);
+
+        await s3.deleteObject({
+          Bucket: bucket,
+          Key: filePath,
+        }).promise();
+        console.log(`deleted ${filePath}`);
       })
   });
 

@@ -8,7 +8,7 @@ import { middyfy } from '@libs/lambda';
 
 
 const importProductsFile = async (event) => {
-  console.log('importProductsFile handler', event.queryStringParameters, event.pathParameters);
+  console.log('importProductsFile handler', event.queryStringParameters);
   const fileName = event.queryStringParameters.name;
   console.log('importProductsFile fileName', fileName);
 
