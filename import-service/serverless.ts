@@ -1,7 +1,8 @@
 import type { AWS } from '@serverless/typescript';
 
 import importProductsFile from '@functions/importProductsFile';
-import importFileParser from '@functions/importFileParser'
+import importFileParser from '@functions/importFileParser';
+import catalogBatchProcess from '@functions/catalogBatchProcess';
 
 const serverlessConfiguration: AWS = {
   service: 'import-service',
@@ -24,6 +25,9 @@ const serverlessConfiguration: AWS = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+      SQS_URL: {
+        Ref: SQSQueue
+      }
     },
     lambdaHashingVersion: '20201221',
     iamRoleStatements: [
@@ -39,8 +43,18 @@ const serverlessConfiguration: AWS = {
       },
     ],
   },
+  resources: {
+    Resources: {
+      SQSQueue: {
+        Type: AWS::SQS::Queue
+      },
+      Properties: {
+        QueueName: QUEUE_NAME
+      }
+    }
+  },
   // import the function via paths
-  functions: { importProductsFile, importFileParser },
+  functions: { importProductsFile, importFileParser, catalogBatchProcess },
 };
 
 module.exports = serverlessConfiguration;
