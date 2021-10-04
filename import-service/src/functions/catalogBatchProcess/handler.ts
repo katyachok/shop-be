@@ -1,22 +1,22 @@
 import 'source-map-support/register';
 import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
-const AWS = require('aws-sdk')
+const AWS = require('aws-sdk');
 
 const catalogBatchProcess = async (event) => {
   console.log('catalogBatchProcess event', event);
+  const products = event.Records.map(({ body }) => body);
+  console.log('catalogBatchProcess products', products);
+  const sns = new AWS.SNS({ region: 'eu-west-1' })
+  
+  sns.publish({
+    Subject: 'product info',
+    Message: JSON.stringify(products),
+    TopicArn: process.env.SNS_ARN
+  }, () => {
+    console.log('Send email for' + JSON.stringify(products))
+  })
 
-  const sqs = new AWS.SQS();
-  const products = JSON.parse(event.body);
-
-  products.forEach(product => {
-    sqs.sendMessage({
-      QueueUrl: process.env.SQS_URL,
-      MessageBody: product
-    }, () => {
-      console.log('send message for' + product);
-    })
-  });
 
   return formatJSONResponse({
     code: 200

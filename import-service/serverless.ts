@@ -26,7 +26,10 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       SQS_URL: {
-        Ref: SQSQueue
+        Ref: "SQSQueue"
+      },
+      SNS_ARN: {
+        Ref: "SNSTopic"
       }
     },
     lambdaHashingVersion: '20201221',
@@ -41,15 +44,48 @@ const serverlessConfiguration: AWS = {
         Action: "s3:*",
         Resource: "arn:aws:s3:::${env:UPLOADBUCKET}/*",
       },
+      {
+        Effect: 'Allow',
+        Action: "sqs:*",
+        Resource: {
+					"Fn::GetAtt": [
+						"SQSQueue",
+						"Arn"
+					]
+				}
+      },
+      {
+        Effect: 'Allow',
+        Action: "sns:*",
+        Resource: {
+					"Ref": "SNSTopic",
+				}
+      },
     ],
   },
   resources: {
     Resources: {
       SQSQueue: {
-        Type: AWS::SQS::Queue
+        Type: "AWS::SQS::Queue",
+        Properties: {
+          QueueName: "catalogItemsQueue",
+        },
       },
-      Properties: {
-        QueueName: QUEUE_NAME
+      SNSTopic: {
+        Type: "AWS::SNS::Topic",
+        Properties: {
+          TopicName: "catalogItemsTopic",
+        },
+      },
+      SNSSubscription: {
+        Type: "AWS::SNS::Subscription",
+        Properties: {
+          Endpoint: "kateTestWo@outlook.com",
+          Protocol: "email",
+          TopicArn: {
+            Ref: "SNSTopic"
+          }
+        },
       }
     }
   },
