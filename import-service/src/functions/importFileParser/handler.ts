@@ -9,6 +9,8 @@ import { middyfy } from '@libs/lambda';
 
 const importFileParser = async (event) => {
   const s3 = new AWS.S3({ region: 'eu-west-1' });
+  const sqs = new AWS.SQS();
+  // const products = JSON.parse(event.body);
 
   console.log('importFileParser event.Records', event.Records);
   event.Records.forEach(record => {
@@ -20,8 +22,14 @@ const importFileParser = async (event) => {
     }).createReadStream();
     
     s3Stream.pipe(csv())
-      .on('data', data => {
-        console.log(data);
+      .on('data', product => {
+        console.log(product);
+        sqs.sendMessage({
+          QueueUrl: process.env.SQS_URL,
+          MessageBody: JSON.stringify(product)
+        }, () => {
+          console.log('send message for' + product.title);
+        })
       })
       .on('end', async () => {
         await s3.copyObject({
