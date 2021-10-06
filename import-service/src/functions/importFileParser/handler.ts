@@ -26,7 +26,7 @@ const importFileParser = async (event) => {
         console.log(product);
         sqs.sendMessage({
           QueueUrl: process.env.SQS_URL,
-          MessageBody: product
+          MessageBody: JSON.stringify(product)
         }, () => {
           console.log('send message for' + product.title);
         })

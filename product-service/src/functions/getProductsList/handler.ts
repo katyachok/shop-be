@@ -7,7 +7,7 @@ import { Client } from 'pg';
 import { dbOptions } from '@functions/utils.js';
 import { v4 as uuidv4 } from 'uuid';
 
-const getProductsList = async (event: any) => {
+export const getProductsList = async (event: any) => {
   const client = new Client(dbOptions);
   await client.connect();
   try {
